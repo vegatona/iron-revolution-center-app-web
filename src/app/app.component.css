@@ -1,78 +1,84 @@
-.sliderbar {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+main {
+  display: flex;
 }
-  
+
+.sliderbar {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; 
+  background: #EBEBEB;
+  transition: width 0.3s ease;
+}
+
 .rectangle-1 {
-  width: 250px; /* Ancho cuando está expandido */
+  width: 250px;
   height: 76px;
-  padding: 8px 16px; /* Ajuste del padding para alinear el ícono con el texto */
+  padding: 8px 16px;
   background: #444444;
   display: flex;
   align-items: center;
-  transition: width 0.3s ease; /* Animación de transición */
+  transition: width 0.3s ease;
 }
-  
+
 .rectangle-1.collapsed {
-  width: 76px; /* Ancho cuando está colapsado */
-  justify-content: center; /* Centra el ícono cuando está colapsado */
-  padding: 8px; /* Padding reducido para el estado colapsado */
+  width: 76px; 
+  justify-content: center;
+  padding: 8px;
 }
-  
+
 .menu-icon {
   width: 28px;
   height: 28px;
   color: #FFFFFF;
   cursor: pointer;
 }
-  
+
 .sliderbar-title {
   font-family: "Montserrat", sans-serif;
   font-weight: bold;
   color: #FFFFFF;
-  margin-left: 16px; /* Espacio entre el ícono y el texto */
+  margin-left: 16px;
 }
-  
+
 .rectangle-2 {
-  width: 250px; /* Ancho cuando está expandido */
-  height: 1005px;
+  width: 250px; 
+  height: 100%;
   padding: 8px;
   background: #EBEBEB;
-  transition: width 0.3s ease; /* Animación de transición */
+  transition: width 0.3s ease;
 }
-  
+
 .rectangle-2.collapsed {
-  width: 76px; /* Ancho cuando está colapsado */
+  width: 76px; 
 }
-  
+
 nav ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-  
+
 nav ul li {
   margin: 10px 0;
   display: flex;
   align-items: center;
 }
-  
+
 nav ul li a {
   display: flex;
-  align-items: center; /* Alinea verticalmente el ícono y el texto */
-  text-decoration: none; /* Quita el subrayado de los enlaces */
-  color: inherit; /* Hereda el color del texto */
-  width: 100%; /* Ocupa todo el ancho disponible */
-  padding: 8px; /* Espaciado interno */
+  align-items: center; 
+  text-decoration: none; 
+  color: inherit; 
+  width: 100%; 
+  padding: 8px;
 }
-  
+
 .icon {
   width: 28px;
   height: 28px;
   color: #444444;
 }
-  
+
 .text-icon {
   width: 188px;
   height: 34px;
@@ -88,9 +94,8 @@ nav ul li a {
   align-items: center;
 }
 
-.rectangle-3 {
-    width: 1845px;
-    height: 76px;
-    padding: 8px 8px 8px 8px;
-    background: #FFFFFF;
-  }
+.content {
+  flex: 1; 
+  padding: 16px; 
+  overflow-y: auto;
+}

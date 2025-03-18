@@ -1,68 +1,72 @@
 <main>
+  <div class="align-items-start">
+    <!-- sliderbar -->
     <div class="sliderbar">
-        <div class="rectangle-1" [class.collapsed]="!isOpen">
-          <mat-icon class="menu-icon" (click)="toggleSidebar()">
-            {{ isOpen ? 'close' : 'menu' }}
-          </mat-icon>
-          <span *ngIf="isOpen" class="sliderbar-title">Iron Revolution</span>
-        </div>
-    
-        <div class="rectangle-2" [class.collapsed]="!isOpen">
-          <nav>
-            <ul>
-              <li>
-                <a href="#">
-                  <mat-icon class="icon">home</mat-icon>
-                  <span *ngIf="isOpen" class="text-icon">Dashboard</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <mat-icon class="icon">bar_chart</mat-icon>
-                  <span *ngIf="isOpen" class="text-icon">Estadísticas</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <mat-icon class="icon">people</mat-icon>
-                  <span *ngIf="isOpen" class="text-icon">Clientes</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <mat-icon class="icon">calendar_today</mat-icon>
-                  <span *ngIf="isOpen" class="text-icon">Membersías</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <mat-icon class="icon">fitness_center</mat-icon>
-                  <span *ngIf="isOpen" class="text-icon">Ejercicios</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <mat-icon class="icon">badge</mat-icon>
-                  <span *ngIf="isOpen" class="text-icon">Empleados</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <mat-icon class="icon">business</mat-icon>
-                  <span *ngIf="isOpen" class="text-icon">Sucursales</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <mat-icon class="icon">lock</mat-icon>
-                  <span *ngIf="isOpen" class="text-icon">Usuarios</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+      <div class="rectangle-1" [class.collapsed]="!isOpen">
+        <mat-icon class="menu-icon" (click)="toggleSidebar()">
+          {{ isOpen ? 'close' : 'menu' }}
+        </mat-icon>
+        <span *ngIf="isOpen" class="sliderbar-title">Iron Revolution</span>
+      </div>
+      <div class="rectangle-2" [class.collapsed]="!isOpen">
+        <nav>
+          <ul>
+            <li>
+              <a href="#">
+                <mat-icon class="icon">home</mat-icon>
+                <span *ngIf="isOpen" class="text-icon">Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <mat-icon class="icon">bar_chart</mat-icon>
+                <span *ngIf="isOpen" class="text-icon">Estadísticas</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <mat-icon class="icon">people</mat-icon>
+                <span *ngIf="isOpen" class="text-icon">Clientes</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <mat-icon class="icon">calendar_today</mat-icon>
+                <span *ngIf="isOpen" class="text-icon">Membersías</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <mat-icon class="icon">fitness_center</mat-icon>
+                <span *ngIf="isOpen" class="text-icon">Ejercicios</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <mat-icon class="icon">badge</mat-icon>
+                <span *ngIf="isOpen" class="text-icon">Empleados</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <mat-icon class="icon">business</mat-icon>
+                <span *ngIf="isOpen" class="text-icon">Sucursales</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <mat-icon class="icon">lock</mat-icon>
+                <span *ngIf="isOpen" class="text-icon">Usuarios</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
-    
-    <div class="rectangle-3"></div>
-    <router-outlet />
+
+    <!-- contenido principal -->
+    <div class="content">
+      <router-outlet />
+    </div>
+  </div>
 </main>

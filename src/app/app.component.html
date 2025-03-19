@@ -8,17 +8,18 @@
         </mat-icon>
         <span *ngIf="isOpen" class="sliderbar-title">Iron Revolution</span>
       </div>
+      
       <div class="rectangle-2" [class.collapsed]="!isOpen">
         <nav>
           <ul>
             <li>
-              <a href="#">
+              <a [routerLink]="['/main-dashboard']">
                 <mat-icon class="icon">home</mat-icon>
                 <span *ngIf="isOpen" class="text-icon">Dashboard</span>
               </a>
             </li>
             <li>
-              <a href="#">
+              <a [routerLink]="['/statics']">
                 <mat-icon class="icon">bar_chart</mat-icon>
                 <span *ngIf="isOpen" class="text-icon">Estadísticas</span>
               </a>
@@ -63,10 +64,11 @@
         </nav>
       </div>
     </div>
-
-    <!-- contenido principal -->
-    <div class="content">
-      <router-outlet />
-    </div>
   </div>
+
+  <!-- contenido principal -->
+  <div class="content">
+    <router-outlet />
+  </div>
+
 </main>

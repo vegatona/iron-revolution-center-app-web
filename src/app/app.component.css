@@ -5,7 +5,7 @@ main {
 .sliderbar {
   display: flex;
   flex-direction: column;
-  height: 100vh; 
+  height: 100%; 
   background: #EBEBEB;
   transition: width 0.3s ease;
 }
@@ -42,10 +42,12 @@ main {
 
 .rectangle-2 {
   width: 250px; 
-  height: 100%;
+  height: auto;
+  flex-grow: 1;
   padding: 8px;
   background: #EBEBEB;
   transition: width 0.3s ease;
+  overflow: hidden;
 }
 
 .rectangle-2.collapsed {
@@ -69,8 +71,9 @@ nav ul li a {
   align-items: center; 
   text-decoration: none; 
   color: inherit; 
-  width: 100%; 
+  width: auto; 
   padding: 8px;
+  white-space: nowrap;
 }
 
 .icon {
@@ -99,3 +102,4 @@ nav ul li a {
   padding: 16px; 
   overflow-y: auto;
 }
+

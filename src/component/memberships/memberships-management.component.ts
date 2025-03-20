@@ -34,10 +34,10 @@ interface Membership {
 export class MembershipsManagementComponent {
   displayedColumns: string[] = ['name', 'duration', 'actions'];
   memberships: Membership[] = [
+    { id: '004', name: 'Anual', duration: 365 },
     { id: '001', name: 'Mensual', duration: 31 },
     { id: '002', name: 'Estudiantes (Mensual)', duration: 31 },
-    { id: '003', name: 'Mensual', duration: 7 },
-    { id: '004', name: 'Anual', duration: 365 }
+    { id: '003', name: 'Semanal', duration: 7 },
   ];
   
   filteredMemberships: Membership[] = [...this.memberships]; // Inicializamos con todas las membresías

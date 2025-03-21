@@ -1,33 +1,54 @@
-<!-- contenedor -->
 <div class="container mt-4">
     <p class="route-url">Iron-Revolution-Center / Dashboard</p>
     <div class="container-main-dashboard">
         <p class="title-page"><mat-icon class="icon">home</mat-icon>Dashboard</p>
 
-        <div class="filter"></div>
-
-        <div class="card clients-registered">
-            <p class="title">Clientes</p>
-            <p class="subtitle">Clientes registrados</p>
-            <p class="count">340</p>
+        <div class="filter">
+            <div class="select-branch">
+                <label class="label-sucursal">Sucursal</label>
+                <select class="branches">
+                    <option>Todos</option>
+                </select>
+            </div>
+            <button class="clean-btn">
+                <mat-icon class="cleaning-service-icon">cleaning_services</mat-icon>
+                Limpiar
+            </button>
+            <mat-icon class="filter-icon">tune</mat-icon>
         </div>
 
-        <div class="card clients-active">
-            <p class="title">Clientes</p>
-            <p class="subtitle">Clientes activos en la sucursal</p>
-            <p class="count">100</p>
+        <div class="card-container">
+            <div class="card clients-registered">
+                <p class="title">Clientes</p>
+                <p class="subtitle">Clientes registrados</p>
+                <p class="count">340</p>
+            </div>
+            <div class="card clients-active">
+                <p class="title">Clientes</p>
+                <p class="subtitle">Clientes activos en la sucursal</p>
+                <p class="count">100</p>
+            </div>
+            <div class="card employees-registered">
+                <p class="title">Empleados</p>
+                <p class="subtitle">Empleados registrados</p>
+                <p class="count">4</p>
+            </div>
+            <div class="card most-frequent">
+                <p class="title">Más frecuentado</p>
+                <p class="location">Tabasco</p>
+                <mat-icon class="icon-most-frequent">people</mat-icon>
+            </div>
         </div>
 
-        <div class="card employees-registered">
-            <p class="title">Empleados</p>
-            <p class="subtitle">Empleados registrados</p>
-            <p class="count">4</p>
-        </div>
-
-        <div class="card most-frequent">
-            <p class="title">Más frecuentado</p>
-            <p class="location">Tabasco</p>
-            <mat-icon class="icon-most-frequent">people</mat-icon>
+        <div class="grid-container">
+            <div class="preferences-container">
+                <label class="label-preferencias">Preferencias</label>
+                <canvas id="barChart"></canvas>
+            </div>
+            <div class="most-popular-container">
+                <label class="label-membresias-populares">Membresías populares</label>
+                <canvas id="pieChart"></canvas>
+            </div>
         </div>
     </div>
 </div>

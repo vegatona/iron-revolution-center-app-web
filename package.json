@@ -23,9 +23,12 @@
     "@angular/platform-server": "^17.3.0",
     "@angular/router": "^17.3.0",
     "@angular/ssr": "^17.3.9",
+    "apexcharts": "^4.5.0",
     "bootstrap": "^5.3.3",
+    "chart.js": "^4.4.8",
     "express": "^4.18.2",
     "material-icons": "^1.13.14",
+    "ng": "^0.0.0",
     "primeicons": "^7.0.0",
     "primeng": "^17.18.15",
     "rxjs": "~7.8.0",
@@ -33,7 +36,7 @@
     "zone.js": "~0.14.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^17.3.9",
+    "@angular-devkit/build-angular": "^19.2.4",
     "@angular/cli": "^17.3.9",
     "@angular/compiler-cli": "^17.3.0",
     "@types/express": "^4.17.17",

@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import { RouterOutlet, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
+
+import { ModuleModule } from './module.module';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, CommonModule, MatSidenavModule, MatIconModule, MatButtonModule],
+  imports: [RouterOutlet, 
+            RouterModule, 
+            CommonModule, 
+            ModuleModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

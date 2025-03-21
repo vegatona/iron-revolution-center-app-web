@@ -1,33 +1,132 @@
-<!-- contenedor -->
 <div class="container mt-4">
     <p class="route-url">Iron-Revolution-Center / Estadisticas</p>
     <div class="container-main-dashboard">
-        <p class="title-page"><mat-icon class="icon">bar_chart</mat-icon>Estadisticas<p>
+        <p class="title-page"><mat-icon class="icon">bar_chart</mat-icon>Estadisticas</p>
+        
+        <div class="filter">
+            <div class="select-branch">
+                <label class="label-sucursal">Sucursal</label>
+                <select class="branches">
+                    <option>Todos</option>
+                </select>
+            </div>
+            <div class="select-date">
+                <label class="label-fecha">Fecha</label>
+                <div class="select-dateStart-dateEnd">
+                    <input type="date">
+                    <label> - </label>
+                    <input type="date">
+                </div>
+            </div>
+            <button class="clean-btn">
+                <mat-icon class="cleaning-service-icon">cleaning_services</mat-icon>Limpiar
+            </button>
+            <mat-icon class="filter-icon">tune</mat-icon>
+        </div>  
 
-        <div class="filter"></div>
+        <div class="card-container">
+            <div class="card clients-entried">
+                <p class="title">Clientes</p>
+                <p class="subtitle">Clientes que ingresaron</p>
+                <p class="count">340</p>
+            </div>
+            <div class="card most-frequent-day">
+                <p class="title">Día</p>
+                <p class="subtitle">Día mas frecuentado</p>
+                <p class="count">Sabado</p>
+            </div>
+            <div class="card most-frequent-time">
+                <p class="title">Horario</p>
+                <p class="subtitle">Horario mas frecuentado</p>
+                <div class="show-time">
+                    <label class="star-hour">1:00 P.M.</label>
+                    <label class="dash"> - </label>
+                    <label class="end-hour">3:50 P.M.</label>
+                </div>
+            </div>
+        </div> 
 
-        <div class="card clients-registered">
-            <p class="title">Clientes</p>
-            <p class="subtitle">Clientes registrados</p>
-            <p class="count">340</p>
-        </div>
-
-        <div class="card clients-active">
-            <p class="title">Clientes</p>
-            <p class="subtitle">Clientes activos en la sucursal</p>
-            <p class="count">100</p>
-        </div>
-
-        <div class="card employees-registered">
-            <p class="title">Empleados</p>
-            <p class="subtitle">Empleados registrados</p>
-            <p class="count">4</p>
-        </div>
-
-        <div class="card most-frequent">
-            <p class="title">Más frecuentado</p>
-            <p class="location">Tabasco</p>
-            <mat-icon class="icon-most-frequent">people</mat-icon>
+        <div class="table-container">
+            <label class="label-centro-de-actividad">Centro de actividad</label>
+            <table class="table-activity-center">
+                <thead>
+                    <tr>
+                        <th>NIP</th>
+                        <th>Nombre</th>
+                        <th>Ubicación</th>
+                        <th>Entrada</th>
+                        <th>Salida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Aquí irían las filas de la tabla -->
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
+
+<!-- <div class="container mt-4">
+    <p class="route-url">Iron-Revolution-Center / Estadisticas</p>
+    <div class="container-main-dashboard">
+        <p class="title-page"><mat-icon class="icon">bar_chart</mat-icon>Estadisticas</p>
+        
+        <div class="filter">
+            <div class="select-branch">
+                <label class="label-sucursal">Sucursal</label>
+                <select class="branches">
+                    <option>Todos</option>
+                </select>
+            </div>
+            <div class="select-date">
+                <label class="label-fecha">Fecha</label>
+                    <div class="select-dateStart-dateEnd">
+                    <input type="date">
+                    <label> - </label>
+                    <input type="date">
+                </div>
+            </div>
+            <button class="clean-btn">
+                <mat-icon class="cleaning-service-icon">cleaning_services</mat-icon>Limpiar
+            </button>
+            <mat-icon class="filter-icon">tune</mat-icon>
+        </div>  
+
+        <div class="card-container">
+            <div class="card clients-entried">
+                <p class="title">Clientes</p>
+                <p class="subtitle">Clientes que ingresaron</p>
+                <p class="count">340</p>
+            </div>
+            <div class="card most-frequent-day">
+                <p class="title">Día</p>
+                <p class="subtitle">Día mas frecuentado</p>
+                <p class="count">Sabado</p>
+            </div>
+            <div class="card most-frequent-time">
+                <p class="title">Horario</p>
+                <p class="subtitle">Horario mas frecuentado</p>
+                <div class="show-time">
+                    <label class="star-hour">1:00 P.M.</label>
+                    <label class="dash"> - </label>
+                    <label class="end-hour">3:50 P.M.</label>
+                </div>
+            </div>
+        </div> 
+
+        <div class="table-container">
+            <label class="label-centro-de-actividad">Centro de actividad</label>
+            <table class="table-activity-center">
+                <thead>
+                    <tr>
+                        <th>NIP</th>
+                        <th>Nombre</th>
+                        <th>Ubicación</th>
+                        <th>Entrada</th>
+                        <th>Salida</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div> -->

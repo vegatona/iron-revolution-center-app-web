@@ -21,14 +21,6 @@
   width: 100%;
   margin-bottom: 20px;
 }
-.custom-search-box-buscar{
-  margin-left: 0px;
-}
-
-.limpiar-btn{
-  margin-left: 250px;
-
-}
 
 .container-main-sucursales {
   width: auto;
@@ -41,17 +33,6 @@
   border-radius: 16px 16px 16px 16px;
 }
 
-.filter {
-  width: auto;
-  height: 80px;
-  padding: 8px;
-  background: #EBEBEB;
-  border: 1px solid transparent;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  margin: 10px 10px 10px 10px;
-}
-
 .route-url {
   width: 285px;
   height: 22px;
@@ -61,20 +42,6 @@
   font-size: 15px;
   text-align: left;
 }
-  
-  /* Estilos para el título */
-  h2 {
-    display: flex;
-    align-items: center;
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 15px;
-  }
-  
-  h2 mat-icon {
-    margin-right: 10px;
-    color: #444444;
-  }
   
   /* Contenedor de filtros */
   .filters {

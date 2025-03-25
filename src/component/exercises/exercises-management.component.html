@@ -1,1 +1,241 @@
-<p>exercises-management works!</p>
+<div class="container mt-4">
+  <p class="route-url">Iron-Revolution-Center / Ejercicios</p>
+  <div class="container-main-exercises">
+    <p class="title-page"><mat-icon class="icon">fitness_center</mat-icon>Ejercicios</p>
+
+    <!-- Barra de búsqueda y filtros -->
+  <div class="filter"> 
+    <!-- Filtro de Tipo -->
+  <div class="select-branch">
+    <label class="filter-label">Tipo</label>
+    <br>
+    <select class="Tip-btn" [(ngModel)]="selectedType" (change)="applyFilter()">
+      <option value="">Todos</option>
+      <option *ngFor="let type of exerciseTypes" [value]="type">{{ type }}</option>
+    </select>
+  </div>
+
+    <!-- Barra de búsqueda -->
+    <div class="select-branch">
+      <br>
+        <input class="search-input" type="text" placeholder="Buscar" [(ngModel)]="searchQuery" (input)="applyFilter()">
+    </div>
+
+    <!-- Botón Limpiar -->
+    <button class="clean-btn" (click)="clear()">
+      <mat-icon class="cleaning-service-icon">cleaning_services</mat-icon>Limpiar
+    </button>
+
+      <!-- Icono de filtro -->
+    <mat-icon class="filter-icon">tune</mat-icon>
+    
+    </div>
+
+    <!-- Botón Agregar -->
+    <button mat-raised-button color="success" (click)="openAddExerciseModal()">
+      <mat-icon>add</mat-icon> Agregar
+    </button>
+
+    <!-- Contenedor de tablas -->
+    <div class="tables-container">
+
+      <!-- Tabla de ejercicios -->
+      <div class="exercises-table">
+        <table mat-table [dataSource]="filteredExercises" class="mat-elevation-z8">
+          <!-- Columna NIP -->
+          <ng-container matColumnDef="nip">
+            <th mat-header-cell *matHeaderCellDef> NIP </th>
+            <td mat-cell *matCellDef="let exercise"> {{exercise.nip}} </td>
+          </ng-container>
+
+          <!-- Columna Nombre -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let exercise"> {{exercise.name}} </td>
+          </ng-container>
+
+          <!-- Columna Tipo -->
+          <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef> Tipo </th>
+            <td mat-cell *matCellDef="let exercise"> {{exercise.type}} </td>
+          </ng-container>
+
+          <!-- Columna Descripción -->
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef> Descripción </th>
+            <td mat-cell *matCellDef="let exercise"> {{exercise.description}} </td>
+          </ng-container>
+
+          <!-- Columna Series -->
+          <ng-container matColumnDef="series">
+            <th mat-header-cell *matHeaderCellDef> Series </th>
+            <td mat-cell *matCellDef="let exercise"> {{exercise.series}} </td>
+          </ng-container>
+
+          <!-- Columna Repeticiones -->
+          <ng-container matColumnDef="repetitions">
+            <th mat-header-cell *matHeaderCellDef> Repeticiones </th>
+            <td mat-cell *matCellDef="let exercise"> {{exercise.repetitions}} </td>
+          </ng-container>
+
+          <!-- Columna Foto -->
+          <ng-container matColumnDef="photo">
+            <th mat-header-cell *matHeaderCellDef> Foto </th>
+            <td mat-cell *matCellDef="let exercise">
+              <img [src]="exercise.photo" alt="" width="20" height="20">
+            </td>
+          </ng-container>
+
+          <!-- Columna Acciones -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let exercise">
+              <button mat-icon-button color="warn" (click)="editExercise(exercise)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="accent" (click)="deleteExercise(exercise)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <!-- Encabezados y Filas -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+
+      <div class="types-table">
+        <table mat-table [dataSource]="exerciseTypes" class="mat-elevation-z8">
+          <!-- Columna Nombre -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-icon class="icon">fitness_center</mat-icon> Tipos
+            </th>
+            <td mat-cell *matCellDef="let type"> {{type}} </td>
+          </ng-container>
+
+          <!-- Encabezados y Filas -->
+          <tr mat-header-row *matHeaderRowDef="['name']"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['name'];"></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Modal para agregar nuevo ejercicio -->
+    <div *ngIf="isAddExerciseModalOpen" class="modal-overlay">
+      <div class="modal-content">
+        <h2>Agregar nuevo ejercicio</h2>
+        <div class="modal-body">
+          <label for="nombre">Nombre</label>
+          <input id="nombre" type="text" [(ngModel)]="newExercise.name" class="modal-input">
+          
+          <label for="tipo">Tipo</label>
+          <input id="tipo" type="text" [(ngModel)]="newExercise.type" class="modal-input">
+          
+          <label for="descripcion">Descripción</label>
+          <input id="descripcion" type="text" [(ngModel)]="newExercise.description" class="modal-input">
+          
+          <label for="series">Series</label>
+          <input id="series" type="number" [(ngModel)]="newExercise.series" class="modal-input">
+          
+          <label for="repetitions">Repeticiones</label>
+          <input id="repetitions" type="number" [(ngModel)]="newExercise.repetitions" class="modal-input">
+          
+          <label for="photo">Foto (URL)</label>
+          <input id="photo" type="text" [(ngModel)]="newExercise.photo" class="modal-input">
+        </div>
+        <div class="modal-actions">
+          <button mat-button (click)="closeAddExerciseModal()">Cancelar</button>
+          <button mat-button (click)="saveExercise()">Agregar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para agregar nuevo ejercicio -->
+<div *ngIf="isAddExerciseModalOpen" class="modal-overlay">
+  <div class="modal-container">
+    <h2 class="modal-header">Agregar nuevo ejercicio</h2>
+    
+    <div class="details-section">
+      <h3 class="section-header">Detalles</h3>
+      
+      <div class="input-group">
+        <label class="input-label">Nombre *</label>
+        <input type="text" [(ngModel)]="newExercise.name" class="text-input">
+      </div>
+      
+      <div class="input-row">
+        <div class="input-group">
+          <label class="input-label">Tipo *</label>
+          <select [(ngModel)]="newExercise.type" class="select-input">
+            <option value="">Seleccionar *</option>
+            <option *ngFor="let type of exerciseTypes" [value]="type">{{type}}</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="input-group">
+        <label class="input-label">Descripción *</label>
+        <textarea [(ngModel)]="newExercise.description" class="text-input"></textarea>
+      </div>
+      
+      <div class="input-row">
+        <div class="input-group">
+          <label class="input-label">Series *</label>
+          <input type="number" [(ngModel)]="newExercise.series" class="number-input">
+        </div>
+        
+        <div class="input-group">
+          <label class="input-label">Repeticiones *</label>
+          <input type="number" [(ngModel)]="newExercise.repetitions" class="number-input">
+        </div>
+      </div>
+    </div>
+    
+    <div class="photo-section">
+      <h3 class="section-header">Foto</h3>
+      <div class="photo-container">
+        <ng-container *ngIf="newExercise.photo; else placeholderAdd">
+          <img [src]="newExercise.photo" alt="Foto del ejercicio" class="exercise-photo">
+        </ng-container>
+        <ng-template #placeholderAdd>
+          <div class="photo-placeholder">
+            <mat-icon class="placeholder-icon">image</mat-icon>
+          </div>
+        </ng-template>
+      </div>
+      <button mat-stroked-button (click)="fileInputAdd.click()" class="select-button">
+        Seleccionar
+      </button>
+      <input 
+        #fileInputAdd 
+        type="file" 
+        accept="image/*" 
+        style="display: none" 
+        (change)="onFileSelectedAdd($event)"
+      >
+    </div>
+    
+    <div class="action-buttons">
+      <button mat-button (click)="closeAddExerciseModal()" class="cancel-btn">Cancelar</button>
+      <button mat-raised-button (click)="saveExercise()" class="add-btn">Agregar</button>
+    </div>
+  </div>
+</div>
+
+    <!-- Modal para eliminar ejercicio -->
+    <div *ngIf="isDeleteExerciseModalOpen" class="modal-overlay">
+      <div class="modal-content">
+        <h2>Eliminar ejercicio</h2>
+        <div class="modal-body">
+          <p>¿Desea eliminar el ejercicio?</p>
+        </div>
+        <div class="modal-actions">
+          <button mat-button (click)="closeDeleteExerciseModal()">Cancelar</button>
+          <button mat-button (click)="confirmDelete()">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

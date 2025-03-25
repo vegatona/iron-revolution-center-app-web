@@ -1,1 +1,244 @@
-<p>users-management works!</p>
+<div class="container mt-4">
+  <p class="route-url">Iron-Revolution-Center / Usuarios</p>
+  <div class="container-main-users">
+    <p class="title-page"><mat-icon class="icon">people</mat-icon>Usuarios</p>
+
+    <!-- Botón Agregar -->
+    <button mat-raised-button color="success" (click)="openAddUserModal()">
+      <mat-icon>add</mat-icon> Agregar
+    </button>
+
+    <!-- Contenedor de tablas (flexbox para organizar las tablas lado a lado) -->
+    <div class="tables-container">
+      <!-- Tabla de usuarios -->
+      <div class="users-table">
+        <table mat-table [dataSource]="filteredUsers" class="mat-elevation-z8">
+          <!-- Columna Foto -->
+          <ng-container matColumnDef="photo">
+            <th mat-header-cell *matHeaderCellDef>Foto</th>
+            <td mat-cell *matCellDef="let user">
+              <img [src]="user.photo" alt="" width="20" height="20" />
+            </td>
+          </ng-container>
+
+          <!-- Columna NIP -->
+          <ng-container matColumnDef="nip">
+            <th mat-header-cell *matHeaderCellDef>NIP</th>
+            <td mat-cell *matCellDef="let user">{{ user.nip }}</td>
+          </ng-container>
+
+          <!-- Columna Nombre -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let user">{{ user.name }}</td>
+          </ng-container>
+
+          <!-- Columna Rol -->
+          <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef>Rol</th>
+            <td mat-cell *matCellDef="let user">{{ user.role }}</td>
+          </ng-container>
+
+          <!-- Columna Acciones -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+            <td mat-cell *matCellDef="let user">
+              <!-- Botón Azul (Asignar Rol) -->
+              <button mat-icon-button color="primary" (click)="assignRole(user)">
+                <mat-icon>assignment_ind</mat-icon>
+              </button>
+
+              <!-- Botón Editar (Amarillo) -->
+              <button mat-icon-button color="warn" (click)="editUser(user)">
+                <mat-icon>edit</mat-icon>
+              </button>
+
+              <!-- Botón Eliminar -->
+              <button mat-icon-button color="accent" (click)="deleteUser(user)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <!-- Encabezados y Filas -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+
+      <!-- Tabla de roles -->
+<div class="roles-table">
+  <table mat-table [dataSource]="rolesData" class="mat-elevation-z8">
+    <!-- Encabezado de la tabla con el título y el icono -->
+    <ng-container matColumnDef="header">
+      <th mat-header-cell *matHeaderCellDef colspan="2">
+        <mat-icon class="icoon">people</mat-icon> Roles
+      </th>
+    </ng-container>
+
+    <!-- Columna NIP -->
+    <ng-container matColumnDef="nip">
+      <th mat-header-cell *matHeaderCellDef>NIP</th>
+      <td mat-cell *matCellDef="let role">{{ role.nip }}</td>
+    </ng-container>
+
+    <!-- Columna Nombre del Rol -->
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let role">{{ role.role }}</td>
+    </ng-container>
+
+    <!-- Encabezados y Filas -->
+    <tr mat-header-row *matHeaderRowDef="['header']"></tr>
+    <tr mat-header-row *matHeaderRowDef="rolesDisplayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: rolesDisplayedColumns"></tr>
+  </table>
+</div>
+
+    </div>
+
+    <!-- Modal para agregar nuevo usuario -->
+    <div *ngIf="isAddUserModalOpen" class="modal-overlay">
+      <div class="modal-content">
+        <h2>Agregar nuevo usuario</h2>
+        <div class="modal-body">
+          <br>
+          <label for="nombre">Nombre de usuario:</label>
+          <input id="nombre" type="text" [(ngModel)]="newUser.name" class="modal-input" required />
+
+          <label for="rol">Rol:</label>
+          <select id="rol" [(ngModel)]="newUser.role" class="modal-input" required>
+            <option value="">Seleccionar</option>
+            <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+          </select>
+
+          <label for="password">Contraseña:</label>
+          <input id="password" type="password" [(ngModel)]="newUser.password" class="modal-input" required />
+
+          <label for="repeat-password">Repetir contraseña:</label>
+          <input id="repeat-password" type="password" [(ngModel)]="newUser.repeatPassword" class="modal-input" required />
+        </div>
+        <div class="modal-actions">
+          <button mat-button (click)="closeAddUserModal()">Cancelar</button>
+          <button mat-button (click)="saveUser()">Agregar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para editar usuario -->
+    <div *ngIf="isEditUserModalOpen" class="modal-overlay">
+      <div class="modal-content">
+        <h2>Modificar usuario</h2>
+        <div class="modal-body">
+          <label for="nombre">Nombre:</label>
+          <input id="nombre" type="text" [(ngModel)]="editUserData.name" class="modal-input" />
+
+          <label for="rol">Rol:</label>
+          <select id="rol" [(ngModel)]="editUserData.role" class="modal-input">
+            <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+          </select>
+
+          <label for="photo">Foto (URL):</label>
+          <input id="photo" type="text" [(ngModel)]="editUserData.photo" class="modal-input" />
+        </div>
+        <div class="modal-actions">
+          <button mat-button (click)="closeEditUserModal()">Cancelar</button>
+          <button mat-button (click)="updateUser()">Guardar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para eliminar usuario -->
+    <div *ngIf="isDeleteUserModalOpen" class="modal-overlay">
+      <div class="modal-content">
+        <h2>Eliminar usuario</h2>
+        <div class="modal-body">
+          <p>¿Desea eliminar el usuario?</p>
+        </div>
+        <div class="modal-actions">
+          <button mat-button (click)="closeDeleteUserModal()">Cancelar</button>
+          <button mat-button (click)="confirmDelete()">Confirmar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para mostrar información del usuario -->
+    <div *ngIf="isAssignRoleModalOpen" class="modal-overlay">
+      <div class="modal-content">
+        <h2>Información del usuario</h2>
+        <div class="modal-body">
+          <!-- Sección de detalles del usuario -->
+          <div class="user-details-section">
+            <h3>Detalles</h3>
+            <div class="input-group">
+              <label for="nip">NIP:</label>
+              <input id="nip" type="text" [value]="userToAssignRole?.nip" readonly />
+            </div>
+            <div class="input-group">
+              <label for="nombre">Nombre completo:</label>
+              <input id="nombre" type="text" [value]="userToAssignRole?.name" readonly />
+            </div>
+            <div class="input-group">
+              <label for="celular">Celular:</label>
+              <input id="celular" type="text" value="644 167 2837" readonly />
+            </div>
+            <div class="observation-section">
+              <label for="observación">Observación:</label>
+              <input id="Observación" type="text" value="..." readonly />
+              <div class="input-group">
+                <label for="membresia">Membresía:</label>
+                <input id="membresia" type="text" value="Mensual" readonly />
+              </div>
+              <div class="input-group">
+                <label for="estado">Estado:</label>
+                <input id="estado" type="text" value="Vigente" readonly />
+              </div>
+              <div class="input-group">
+                <label for="username">Nombre de usuario:</label>
+                <input id="username" type="text" value="pablo_mm" readonly />
+              </div>
+            </div>
+
+          <!-- Sección de fechas -->
+          <div class="dates-section">
+            <BR>
+            <h3>Fechas</h3>
+            <div class="input-group">
+              <label for="inicio">Inicio:</label>
+              <input id="inicio" type="text" value="05 mayo, 2025" readonly />
+            </div>
+            <div class="input-group">
+              <label for="fin">Fin:</label>
+              <input id="fin" type="text" value="05 abril, 2025" readonly />
+            </div>
+          </div>
+
+          <!-- Sección de rol -->
+          <div class="role-section">
+            <BR>
+            <h3>Rol</h3>
+            <div class="input-group">
+              <label for="rol">Rol:</label>
+              <input id="rol" type="text" [value]="userToAssignRole?.role" readonly />
+            </div>
+          </div>
+
+          <!-- Sección de foto -->
+          <div class="photo-section">
+            <BR>
+            <h3>Foto</h3>
+            <div class="input-group">
+              <label for="foto">URL de la foto:</label>
+              <input id="foto" type="text" [value]="userToAssignRole?.photo" readonly />
+            </div>
+            <div class="photo-preview">
+              <img [src]="userToAssignRole?.photo" alt="Foto del usuario" width="100" height="100" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button mat-button (click)="closeAssignRoleModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>

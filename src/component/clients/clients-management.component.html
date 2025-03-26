@@ -1,1 +1,382 @@
-<p>clients-management works!</p>
+<div class="container mt-4">
+    <p class="route-url">Iron-Revolution-Center / Clientes</p>
+    <div class="container-main-clients">
+      <p class="title-page">
+        <mat-icon class="icon">person</mat-icon>Clientes
+      </p>
+  
+      <!-- Barra de filtros -->
+      <div class="filter">
+        <!-- Filtro de Membresía -->
+        <div class="filter-item">
+          <label for="membership">Membresía</label>
+          <select
+            id="membership"
+            [(ngModel)]="selectedMembership"
+            (change)="onMembershipFilterChange()"
+          >
+            <option value="">Todos</option>
+            <option value="mensual">Mensual</option>
+            <option value="semanal">Semanal</option>
+            <option value="anual">Anual</option>
+          </select>
+        </div>
+  
+        <!-- fecha inicio -->
+        <div class="filter-item">
+          <label for="startDate">Fecha inicio</label>
+          <input
+            id="startDate"
+            type="date"
+            [(ngModel)]="startDate"
+            (change)="applyFilter()"
+          />
+        </div>
+  
+        <!-- fecha fin -->
+        <div class="filter-item">
+          <label for="endDate">Fecha fin</label>
+          <input
+            id="endDate"
+            type="date"
+            [(ngModel)]="endDate"
+            (change)="applyFilter()"
+          />
+        </div>
+  
+        <!-- Búsqueda -->
+        <div class="filter-item">
+          <label for="search"></label>
+          <input
+            id="search"
+            class="search-input"
+            type="text"
+            placeholder="Buscar"
+            [(ngModel)]="searchQuery"
+            (input)="applyFilter()"
+          />
+        </div>
+  
+        <!-- Limpiar -->
+        <button class="clean-btn" (click)="clear()">
+          <mat-icon class="cleaning-service-icon">cleaning_services</mat-icon>
+          Limpiar
+        </button>
+      </div>
+  
+      <!-- Botón Agregar -->
+      <button mat-raised-button color="success" (click)="openAddClientModal()">
+        <mat-icon>add</mat-icon> Agregar
+      </button>
+  
+      <!-- Agregar cliente -->
+      <div *ngIf="isAddClientModalOpen" class="modal-overlay">
+        <div class="modal-content modal-large">
+          <h2>Agregar nuevo cliente</h2>
+          <div class="modal-body-two-column">
+            <!-- Columna izquierda -->
+            <div class="modal-left">
+              <h3>Detalles</h3>
+  
+              <label for="nombre">Nombre completo*</label>
+              <input
+                id="nombre"
+                type="text"
+                [(ngModel)]="newClient.nombre"
+                class="modal-input"
+              />
+  
+              <label for="celular">Celular*</label>
+              <input
+                id="celular"
+                type="text"
+                [(ngModel)]="newClient.celular"
+                class="modal-input"
+              />
+  
+              <label for="Obsevacion">Observación</label>
+              <textarea
+                id="Obsevacion"
+                [(ngModel)]="newClient.Obsevacion"
+                class="modal-textarea"
+              ></textarea>
+  
+              <!-- Checkbox para nombre de usuario -->
+              <label class="checkbox-label">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="modifyUsernameAdd"
+                />
+                ¿Cuenta con usuario?
+              </label>
+  
+              <!-- Campo de nombre de usuario (solo aparece si el checkbox está activo) -->
+              <div *ngIf="modifyUsernameAdd">
+                <label for="nameuser">Nombre de usuario*</label>
+                <input
+                  id="nameuser"
+                  type="text"
+                  [(ngModel)]="newClient.nameuser"
+                  class="modal-input"
+                />
+              </div>
+            </div>
+  
+            <!-- Columna derecha: Foto -->
+            <div class="modal-right">
+              <h3>Foto</h3>
+              <div class="image-container">
+                <ng-container *ngIf="newClient.foto; else placeholderAdd">
+                  <img
+                    [src]="newClient.foto"
+                    alt="Preview"
+                    class="client-photo-large"
+                  />
+                </ng-container>
+                <ng-template #placeholderAdd>
+                  <div class="image-placeholder">
+                    <mat-icon style="font-size: 48px; color: #999;">image</mat-icon>
+                  </div>
+                </ng-template>
+              </div>
+  
+              <button mat-raised-button (click)="fileInputAdd.click()">
+                Seleccionar
+              </button>
+              <input
+                #fileInputAdd
+                id="fotoFileAdd"
+                type="file"
+                accept="image/*"
+                style="display: none"
+                (change)="onFileSelectedAdd($event)"
+              />
+            </div>
+          </div>
+  
+          <!-- Botones al final -->
+          <div class="modal-actions-two-column">
+            <button mat-button (click)="closeAddClientModal()">Cancelar</button>
+            <button mat-button (click)="saveClient()">Agregar</button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Seleccionar membresía (se mantiene igual, sin 2 columnas) -->
+      <div *ngIf="isMembershipModalOpen" class="modal-overlay">
+        <div class="modal-content">
+          <h2>Seleccionar Membresía</h2>
+          <div class="modal-body">
+            <label>
+              <input
+                type="radio"
+                name="membership"
+                value="Mensual"
+                [(ngModel)]="selectedMembershipModal"
+              />
+              Mensual
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="membership"
+                value="Semanal"
+                [(ngModel)]="selectedMembershipModal"
+              />
+              Semanal
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="membership"
+                value="Anual"
+                [(ngModel)]="selectedMembershipModal"
+              />
+              Anual
+            </label>
+          </div>
+          <div class="modal-actions">
+            <button mat-button (click)="closeMembershipModal()">Cancelar</button>
+            <button mat-button (click)="confirmMembership()">Confirmar</button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Editar cliente -->
+      <div *ngIf="isEditClientModalOpen" class="modal-overlay">
+        <div class="modal-content modal-large">
+          <h2>Modificar cliente</h2>
+  
+          <div class="modal-body-two-column">
+            <!-- Columna izquierda -->
+            <div class="modal-left">
+              <h3>Detalles</h3>
+  
+              <label for="edit-nombre">Nombre completo*</label>
+              <input
+                id="edit-nombre"
+                type="text"
+                [(ngModel)]="editClientData.nombre"
+                class="modal-input"
+              />
+  
+              <label for="edit-celular">Celular*</label>
+              <input
+                id="edit-celular"
+                type="text"
+                [(ngModel)]="editClientData.celular"
+                class="modal-input"
+              />
+  
+              <label for="edit-Obsevacion">Observación</label>
+              <textarea
+                id="edit-Obsevacion"
+                [(ngModel)]="editClientData.Obsevacion"
+                class="modal-textarea"
+              ></textarea>
+  
+              <!-- Checkbox -->
+              <label class="checkbox-label">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="modifyUsernameEdit"
+                />
+                ¿Modificar usuario?
+              </label>
+              <div *ngIf="modifyUsernameEdit">
+                <label for="edit-nameuser">Nombre de usuario*</label>
+                <input
+                  id="edit-nameuser"
+                  type="text"
+                  [(ngModel)]="editClientData.nameuser"
+                  class="modal-input"
+                />
+              </div>
+            </div>
+  
+            <!-- Columna derecha: Foto -->
+            <div class="modal-right">
+              <h3>Foto</h3>
+              <div class="image-container">
+                <ng-container *ngIf="editClientData.foto; else placeholderEdit">
+                  <img
+                    [src]="editClientData.foto"
+                    alt="foto"
+                    class="client-photo-large"
+                  />
+                </ng-container>
+                <ng-template #placeholderEdit>
+                  <div class="image-placeholder">
+                    <mat-icon style="font-size: 48px; color: #999;">image</mat-icon>
+                  </div>
+                </ng-template>
+              </div>
+  
+              <button mat-raised-button (click)="fileInputEdit.click()">
+                Seleccionar
+              </button>
+              <input
+                #fileInputEdit
+                id="fotoFileEdit"
+                type="file"
+                accept="image/*"
+                style="display: none"
+                (change)="onFileSelectedEdit($event)"
+              />
+            </div>
+          </div>
+  
+          <div class="modal-actions-two-column">
+            <button mat-button (click)="closeEditClientModal()">Cancelar</button>
+            <button mat-button (click)="updateClient()">Modificar</button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Eliminar cliente (más pequeño) -->
+      <div *ngIf="isDeleteClientModalOpen" class="modal-overlay">
+        <div class="modal-content modal-small">
+          <h2>Eliminar cliente</h2>
+          <p>¿Desea eliminar?</p>
+          <div class="modal-actions-two-column">
+            <button mat-button (click)="closeDeleteClientModal()">Cancelar</button>
+            <button mat-button (click)="confirmDelete()">Confirmar</button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Tabla de Clientes -->
+      <table mat-table [dataSource]="filteredClients" class="mat-elevation-z8">
+        <!-- Foto -->
+        <ng-container matColumnDef="foto">
+          <th mat-header-cell *matHeaderCellDef> Foto </th>
+          <td mat-cell *matCellDef="let client">
+            <img [src]="client.foto" alt="Foto" class="client-photo" />
+          </td>
+        </ng-container>
+  
+        <!-- NIP -->
+        <ng-container matColumnDef="nip">
+          <th mat-header-cell *matHeaderCellDef> NIP </th>
+          <td mat-cell *matCellDef="let client"> {{ client.nip }} </td>
+        </ng-container>
+  
+        <!-- Nombre -->
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let client"> {{ client.nombre }} </td>
+        </ng-container>
+  
+        <!-- Celular -->
+        <ng-container matColumnDef="celular">
+          <th mat-header-cell *matHeaderCellDef> Celular </th>
+          <td mat-cell *matCellDef="let client"> {{ client.celular }} </td>
+        </ng-container>
+  
+        <!-- membresias -->
+        <ng-container matColumnDef="membresia">
+          <th mat-header-cell *matHeaderCellDef> membresia </th>
+          <td mat-cell *matCellDef="let client"> {{ client.membresia }} </td>
+        </ng-container>
+  
+        <!-- Fecha Inicio -->
+        <ng-container matColumnDef="fechainicio">
+          <th mat-header-cell *matHeaderCellDef> fecha inicio </th>
+          <td mat-cell *matCellDef="let client"> {{ client.fechainicio }} </td>
+        </ng-container>
+  
+        <!-- Fecha Fin -->
+        <ng-container matColumnDef="fechafin">
+          <th mat-header-cell *matHeaderCellDef> fecha fin </th>
+          <td mat-cell *matCellDef="let client"> {{ client.fechafin }} </td>
+        </ng-container>
+  
+        <!-- Acciones -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let client">
+            <!-- Botón Membresía -->
+            <button mat-button class="membership-btn" (click)="onMembership(client)">
+              <mat-icon>event</mat-icon>
+            </button>
+  
+            <!-- Botón Editar -->
+            <button mat-button class="edit-btn" (click)="editClient(client)">
+              <mat-icon>edit</mat-icon>
+            </button>
+  
+            <!-- Botón Eliminar -->
+            <button mat-button class="delete-btn" (click)="deleteClient(client)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+  
+        <!-- Encabezados y Filas -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <br />
+    </div>
+  </div>
+  
